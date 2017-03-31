@@ -1,0 +1,1 @@
+export { ParticalCanvas  } from "./partical-canvas";
