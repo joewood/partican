@@ -1,9 +1,8 @@
 import * as React from "react"
-import { range } from "lodash";
-import { EdgeFlow, Node, Edge } from ".."
+// import { range } from "lodash";
+import { ParticleEdge, ParticleCanvas } from ".."
 
 export interface IState {
-    points: { x: number, y: number }[];
 }
 
 export interface IProps {
@@ -13,87 +12,58 @@ export interface IProps {
     animate: boolean;
 }
 
-const radius = 200;
-
-function circlePoint(i: number, length: number) {
-    console.log("Circle " + i + " " + length);
-    const angle = (i % length) / length * 2 * Math.PI;
-    return {
-        x: radius + radius * Math.cos(angle),
-        y: radius + radius * Math.sin(angle)
-    };
-}
 
 export default class Swirl extends React.Component<IProps, IState> {
 
     constructor(p: any) {
         super(p);
         this.state = {
-            points: range(0, 24).map((_pt, i) => circlePoint(i, 24)),
         };
     }
 
-    componentWillReceiveProps(newProps: IProps) {
-        const points = this.state.points.map((pt, i, arr) => circlePoint(i + (pt && newProps.animationIndex), arr.length));
-        this.setState({ points: points });
-
-    }
-
     render() {
-        const { points } = this.state;
-        const { animate, width, height } = this.props;
-        const numPoints = points.length;
+        const { animate, animationIndex, width, height } = this.props;
+        console.log(`height: ${height} width: ${width} ${animationIndex}`)
         return <div key="root"
             style={{ display: "flex", flexDirection: "column", alignItems: "stretch", backgroundColor: "black", height: height, width: width, overflow: "hidden" }}>
-            <EdgeFlow style={{ height: height * 0.8 - 20, width: width * 0.8, backgroundColor: "#0f0f0f" }} animate={animate} >
-                {
-                    [...points.map((p, i) =>
-                        <Node key={"node" + i} id={"node" + i} label={i.toString()} center={{ x: p.x, y: p.y }}
-                            labelStyle={{
-                                color: "white"
-                            }}>
-                            <Edge linkTo={"node" + (i + 1) % numPoints}
-                                ratePerSecond={7}
-                                particleStyle={{
-                                    variationMin: -0.1,
-                                    variationMax: 0.1,
-                                    size: 5.0,
-                                    roundness: 0.0,
-                                    color: `rgb(${Math.round(255 - i / points.length * 200)},200,${Math.round(i / points.length * 200 + 50)})`
-                                }}
-                                pathStyle={{
-                                    opacity: 0.05,
-                                    color: `rgb(${Math.round(255 - i / points.length * 200)},200,${Math.round(i / points.length * 200 + 50)})`
-                                }}
-                            />
+            <ParticleCanvas key="demo-particles"
+                style={{
+                    height: height * 0.8 - 20,
+                    width: width * 0.8
+                }}
+                run={animate}>
+                <ParticleEdge key="node1"
+                    p0={{ x: 0.9, y: 0.40 }}
+                    p1={{ x: 0.500, y: 0.99 }}
+                    p2={{ x: 0.200, y: 0.15 }}
+                    p3={{ x: 0.150, y: 0.40 }}
+                    particleStyle={{
+                        color: "orange",
+                        endingColor: "purple",
+                        roundness: 0.3,
+                        size: 10,
+                        variationMin: -0.1,
+                        variationMax: 0.1,
+                    }}
+                    ratePerSecond={(animationIndex % 3) * 15 + 5}
+                />
 
-                            }}
-                            <Edge linkTo={"nodep-" + Math.floor(i / points.length * 4)}
-                                ratePerSecond={10}
-                                nonrandom
-                                p0={{ x: p.x, y: p.y }}
-                                p1={{ x: p.x + 10.0, y: p.y + 10.0 }}
-                                p2={{ x: radius + 40, y: radius + 40 }}
-                                p3={{ x: radius, y: radius }}
-                                particleStyle={{
-                                    color: "#e0ffe0",
-                                    size: 8,
-                                    roundness: 1.0,
-                                    endingColor: "rgba(192,255,192,0.0)"
-                                }}
-                                pathStyle={{
-                                    width: 3,
-                                    opacity: 0.001
-                                }}
-                            />
-                        </Node>),
-                    <Node key="nodep-0" id="nodep-0" center={{ x: radius + radius / 8, y: radius + radius / 8 }} group />,
-                    <Node key="nodep-1" id="nodep-1" center={{ x: radius - radius / 8, y: radius + radius / 8 }} group />,
-                    <Node key="nodep-2" id="nodep-2" center={{ x: radius - radius / 8, y: radius - radius / 8 }} group />,
-                    <Node key="nodep-3" id="nodep-3" center={{ x: radius + radius / 8, y: radius - radius / 8 }} group />,
-                    ]
-                }
-            </EdgeFlow>
+                <ParticleEdge key="node2"
+                    p0={{ x: 0.05, y: 0.30 }}
+                    p1={{ x: 0.300, y: 0.700 }}
+                    p2={{ x: 0.800, y: 0.350 }}
+                    p3={{ x: 0.950, y: 0.250 }}
+                    particleStyle={{
+                        color: "white",
+                        endingColor: "yellow",
+                        roundness: 0.6,
+                        size: 10,
+                        variationMin: -0.2,
+                        variationMax: 0.2,
+                    }}
+                    ratePerSecond={(3 - (animationIndex % 3)) * 7}
+                />
+            </ParticleCanvas>
         </div >;
     }
 }

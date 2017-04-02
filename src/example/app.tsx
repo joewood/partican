@@ -23,7 +23,7 @@ class App extends React.Component<any, IState> {
             screen: Screen.NETWORK,
             height: 300,
             width: 300,
-            animate: false,
+            animate: true,
             animationIndex: 0
         }
     }
@@ -34,7 +34,7 @@ class App extends React.Component<any, IState> {
     }
 
     public componentDidMount() {
-        this.timer = window.setInterval(this.moveNext, 2000)
+        this.timer = window.setInterval(this.moveNext, 1000)
         window.addEventListener("resize", this.onResize);
         this.setState({ width: document.getElementById("root").clientWidth, height: document.getElementById("root").clientHeight - 20 });
     }
@@ -51,23 +51,11 @@ class App extends React.Component<any, IState> {
     }
 
     public render() {
-        const {screen, width, height, animate, animationIndex} = this.state;
-        const buttonStyle = { height: 50, width: 130, margin: 5, color: "black" };
+        const {width, height, animate, animationIndex} = this.state;
         return (<div key="root" id="root"
             style={{ backgroundColor: "black", overflow: "hidden" }}
             ref={div => this.div = div}>
-            <div style={{ height: 60 }}>
-                <button key="pause" style={buttonStyle}
-                    onClick={() => this.setState({ animate: !this.state.animate })}>Pause</button>
-                <button key="swirl" style={buttonStyle}
-                    onClick={() => this.setState({ screen: Screen.SWIRL })}>Swirl</button>
-                <button key="partition" style={buttonStyle}
-                    onClick={() => this.setState({ screen: Screen.PARTITION })}>Partition</button>
-                <button key="network" style={buttonStyle}
-                    onClick={() => this.setState({ screen: Screen.NETWORK })}>Network</button>
-            </div>
                 <Swirl animate={animate} animationIndex={animationIndex} height={height - 60} width={width} />
-            }
         </div>
         )
     }

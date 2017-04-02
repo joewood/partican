@@ -1,1 +1,1 @@
-export { ParticalCanvas  } from "./partical-canvas";
+export { ParticleCanvas, ParticleEdge  } from "./particle-canvas";
