@@ -1,6 +1,7 @@
 import * as React from "react"
 import * as ReactDOM from 'react-dom'
-import Swirl from "./swirl"
+// import Swirl from "./swirl"
+import Paint from "../test/paint"
 
 enum Screen { SWIRL, SIMPLE, PARTITION, NETWORK };
 
@@ -21,13 +22,13 @@ class App extends React.Component<any, IState> {
         super(p);
         this.state = {
             screen: Screen.NETWORK,
-            height: 300,
-            width: 300,
-            animate: true,
+            height: 0,
+            width: 0,
+            animate: false,
             animationIndex: 0
         }
     }
- 
+
     private onResize = () => {
         console.log("resize");
         this.setState({ width: document.getElementById("root").clientWidth, height: document.getElementById("root").clientHeight });
@@ -51,15 +52,19 @@ class App extends React.Component<any, IState> {
     }
 
     public render() {
-        const {width, height, animate, animationIndex} = this.state;
+        const { width, height/*, animate, animationIndex*/ } = this.state;
+        console.log("resize", this.state);
         return (<div key="root" id="root"
             style={{ backgroundColor: "black", overflow: "hidden" }}
             ref={div => this.div = div}>
-                <Swirl animate={animate} animationIndex={animationIndex} height={height - 60} width={width} />
+            {width && <Paint width={width} height={height} />}
         </div>
         )
     }
 }
+
+// <Swirl animate={animate} animationIndex={animationIndex} height={height - 60} width={width} />
+
 
 document.addEventListener("DOMContentLoaded", () => {
     ReactDOM.render(<App />, document.getElementById("root"));

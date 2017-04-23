@@ -1,30 +1,32 @@
 import { IEdge as IModelEdge } from "./model";
+import { ParticleScheduleState } from "./particle-edge";
 export interface IParticleEdge extends IModelEdge {
 }
+export interface IProps {
+    color?: string;
+    running?: boolean;
+    backgroundColor?: string;
+    canvas: HTMLCanvasElement;
+    size?: number;
+}
 export default class Particles {
-    private canvas;
-    private size;
-    private worldsize;
-    private color;
-    private running;
     private igloo;
     private program;
     private raf;
-    backgroundColor: {
-        r: number;
-        g: number;
-        b: number;
-    };
+    private worldsize;
     private count;
     private textureData;
+    private backgroundColor;
+    private props;
     /**
      * @param nparticles initial particle count
      * @param [size=5] particle size in pixels
      */
-    constructor(canvas: HTMLCanvasElement, size?: number);
+    constructor(props: IProps);
+    updateProps(props: IProps): void;
     readonly isRunning: boolean;
     /** If the vertices have changed then update the buffers   */
-    updateBuffers(edges: IParticleEdge[], width: number, height: number): void;
+    updateBuffers(edges: ParticleScheduleState[], width: number, height: number): void;
     /** Draw the current simulation state to the display. */
     draw(): this;
     /** Register with requestAnimationFrame to step and draw a frame.*/

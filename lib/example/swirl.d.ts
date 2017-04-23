@@ -1,10 +1,6 @@
 /// <reference types="react" />
 import * as React from "react";
 export interface IState {
-    points: {
-        x: number;
-        y: number;
-    }[];
 }
 export interface IProps {
     width: number;
@@ -14,6 +10,5 @@ export interface IProps {
 }
 export default class Swirl extends React.Component<IProps, IState> {
     constructor(p: any);
-    componentWillReceiveProps(newProps: IProps): void;
     render(): JSX.Element;
 }

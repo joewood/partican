@@ -1,38 +1,48 @@
 import * as React from "react";
 import Particles from "./particles";
-import Color = require("color");
+// import Color = require("color");
 import { IParticleEdge } from './particles'
+import { IParticleStyle } from "./model"
+import { keyBy, map, Dictionary } from "lodash"
 
-export class ParticleEdge extends React.Component<IParticleEdge, any> {
-    public render() {
-        return null;
-    }
-}
+import ParticleEdge, { ParticleScheduleState } from "./particle-edge"
 
 export interface IProps {
-    style:{
-        width:number;
-        height:number;
+    style: {
+        width: number;
+        height: number;
         backgroundColor?: string;
     }
+    defaultParticleStyle?: IParticleStyle;
+    defaultRatePerSecond?: number;
     children?: ParticleEdge[];
     run?: boolean;
 }
 
-export class ParticleCanvas extends React.PureComponent<IProps, any> {
+export interface IState {
+}
+
+export class ParticleCanvas extends React.PureComponent<IProps, IState> {
     private canvas: HTMLCanvasElement;
     private particles: Particles;
+    private edgeState: Dictionary<ParticleScheduleState> = {};
+
 
     private setupParticles = (props: IProps) => {
         if (!this.canvas) return;
         console.log("Setting up particles")
         //set-up canvas
-        const background = Color(props.style.backgroundColor);
         // this.particles.stop();
-        const flowsAny = React.Children.map(props.children, c => (c as any).props.style ? (c as any).valueOf() : c) || [];
-        const flows = flowsAny.map(fa => fa.props as IParticleEdge);
-        this.particles.backgroundColor = { r: background.red(), g: background.green(), b: background.blue() };
-        this.particles.updateBuffers(flows, props.style.width, props.style.height);
+        const flowsAny = keyBy(React.Children.toArray(props.children) as { key: string, props: IParticleEdge }[], c => c.key);
+        map(flowsAny, (v, k) => {
+            if (!this.edgeState[k]) {
+                this.edgeState[k] = new ParticleScheduleState(v.props);
+            } else {
+                this.edgeState[k].updateProps(v.props);
+            }
+        });
+        // this.particles.updateProps({ backgroundColor: props.style.backgroundColor, canvas: this.canvas });
+        this.particles.updateBuffers(Object.values(this.edgeState), props.style.width, props.style.height);
         this.particles.draw();
         if (props.run) this.particles.start();
     }
@@ -51,7 +61,7 @@ export class ParticleCanvas extends React.PureComponent<IProps, any> {
         }
     }
 
-    public shouldComponentUpdate(newProps: IProps/*, newState: any*/) {
+    public shouldComponentUpdate(newProps: IProps, _newState: IState) {
         // if just run changes then don't update
         if (newProps.children == this.props.children &&
             newProps.style.backgroundColor === this.props.style.backgroundColor &&
@@ -87,11 +97,10 @@ export class ParticleCanvas extends React.PureComponent<IProps, any> {
             this.particles = null;
         }
         if (!this.particles) {
-            this.particles = new Particles(this.canvas, 2);
+            this.particles = new Particles({ canvas: this.canvas, size: 2 });
         }
         this.setupParticles(this.props);
     }
-
 
     public render() {
         const { width, height } = this.props.style;
