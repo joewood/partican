@@ -30,7 +30,7 @@
     "@types/color": "^1.0.0",
     "@types/lodash": "^4.14.50",
     "@types/react": "^15.0.9",
-    "@types/react-dom": "^0.14.20",
+    "@types/react-dom": "^15.5.0",
     "@types/webpack": "^2.2.2",
     "file-loader": "^0.10.0",
     "html-loader": "^0.4.4",
