@@ -19,6 +19,7 @@ export interface IParticleSchedule {
     ratePerSecond: number;
     props: IParticleEdge;
     last: {
+        appliesFrom: Date;
         end: Date;
         ratePerSecond: number;
         particles: number[];

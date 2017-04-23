@@ -55,14 +55,14 @@ export class ParticleScheduleState {
     constructor(props: IParticleEdge) {
         this.props = Object.assign({},props);
         this.randomSample = [];
-        for (let n = 1000; n >= 0; n--) { this.randomSample[n] = Math.random(); }
+        for (let n = 10000; n >= 0; n--) { this.randomSample[n] = Math.random(); }
         // this.randomSample = this.randomSample.sort((a, b) => a - b);
         this.previous = null;
     }
 
     public getParticles(): IParticleSchedule {
         return {
-            appliesFrom: (this.previous && this.previous.end) || new Date(),
+            appliesFrom: (this.previous && this.previous.end) || new Date( new Date().valueOf()-0),
             particles: this.randomSample,
             ratePerSecond: this.props.ratePerSecond,
             props: this.props,
@@ -80,7 +80,7 @@ export class ParticleScheduleState {
         if (force || newProps.ratePerSecond != this.props.ratePerSecond) {
             this.previous = {
                 ratePerSecond: this.props.ratePerSecond,
-                start: this.previous && this.previous.end,
+                start: (this.previous && this.previous.end) || new Date( now.valueOf()-1000),
                 end: now
             };
             this.props = Object.assign({},this.props,  newProps);

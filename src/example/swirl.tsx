@@ -34,9 +34,9 @@ export default class Swirl extends React.Component<IProps, IState> {
                 run={true}>
                 <ParticleEdge key="node1"
                     p0={{ x: 0.9, y: 0.40 }}
-                    p1={{ x: 0.500, y: 0.99 }}
-                    p2={{ x: 0.200, y: 0.15 }}
-                    p3={{ x: 0.150, y: 0.40 }}
+                    p1={{ x: 0.500, y: 0.0 }}
+                    p2={{ x: 0.200, y: 0.0 }}
+                    p3={{ x: 0.150, y: 0.30 }}
                     particleStyle={{
                         color: (animationIndex %2) ? "pink" : "pink",
                         roundness: 0.3,
@@ -45,6 +45,20 @@ export default class Swirl extends React.Component<IProps, IState> {
                         variationMax: 0.1,
                     }}
                     ratePerSecond={(animationIndex % 4) * 10 + 1}
+                />
+              <ParticleEdge key="node2"
+                    p0={{ x: 0.9, y: 0.80 }}
+                    p1={{ x: 0.500, y: 0.99 }}
+                    p2={{ x: 0.200, y: 0.75 }}
+                    p3={{ x: 0.150, y: 0.90 }}
+                    particleStyle={{
+                        color: "white",
+                        roundness: 0.3,
+                        size: 5,
+                        variationMin: -0.2,
+                        variationMax: 0.2,
+                    }}
+                    ratePerSecond={(animationIndex % 2) * 1000 + 10}
                 />
 
             </ParticleCanvas>

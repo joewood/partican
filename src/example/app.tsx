@@ -58,7 +58,7 @@ class App extends React.Component<any, IState> {
         return (<div key="root" id="root"
             style={{ backgroundColor: "black", overflow: "hidden" }}
             ref={div => this.div = div}>
-        { width &&    <Swirl animate={animate} animationIndex={animationIndex} height={height - 60} width={width} /> }
+            {width && <Swirl animate={animate} animationIndex={animationIndex} height={height - 60} width={width} />}
         </div>
         )
     }
