@@ -106,6 +106,7 @@ void main() {
     // if no end time then time is  (clock-startTime+timeOffset) % 1 second
     float seconds = subtract(vec2( clockLsf,clockMsf), startEndTime.xy)+time;
     float timefrac  = 0.0;
+    float timePos = mod(seconds,1.0);
     if (endTime==0.0) { 
         if (seconds<0.0) {
             gl_PointSize = 0.0;
@@ -115,15 +116,15 @@ void main() {
         timefrac = mod(seconds,1.0);
     } else {
         // otherwise time is (timeoffset+endTime % 1 second)+(clock-end)
-        float endDelta = subtract(vec2(clockLsf,clockMsf),startEndTime.zw);
-        timefrac= mod(endTime+startTime,1.0 )+endDelta;
-        if (timefrac>1.0) {
+        float endDelta = subtract(startEndTime.zw,vec2(clockLsf,clockMsf));
+        if ((endDelta+timePos)<0.0) {
             gl_PointSize = 0.0;
             gl_Position = vec4(0.0,0.0,0.0,1.0);
             return;
         }
         // timefrac = mod(seconds,1.0);
     }
+    timefrac = timePos;
     
     // vector coordinates in clockSeconds row
     // vector variations (randomness) in third row (min,max,mid,seed)

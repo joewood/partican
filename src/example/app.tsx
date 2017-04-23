@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as ReactDOM from 'react-dom'
-// import Swirl from "./swirl"
-import Paint from "../test/paint"
+import Swirl from "./swirl"
+// import Paint from "../test/paint"
 
 enum Screen { SWIRL, SIMPLE, PARTITION, NETWORK };
 
@@ -24,7 +24,7 @@ class App extends React.Component<any, IState> {
             screen: Screen.NETWORK,
             height: 0,
             width: 0,
-            animate: false,
+            animate: true,
             animationIndex: 0
         }
     }
@@ -52,18 +52,19 @@ class App extends React.Component<any, IState> {
     }
 
     public render() {
-        const { width, height/*, animate, animationIndex*/ } = this.state;
+        const { width, height } = this.state;
+        const { animate, animationIndex } = this.state;
         console.log("resize", this.state);
         return (<div key="root" id="root"
             style={{ backgroundColor: "black", overflow: "hidden" }}
             ref={div => this.div = div}>
-            {width && <Paint width={width} height={height} />}
+        { width &&    <Swirl animate={animate} animationIndex={animationIndex} height={height - 60} width={width} /> }
         </div>
         )
     }
 }
 
-// <Swirl animate={animate} animationIndex={animationIndex} height={height - 60} width={width} />
+// {width && <Paint width={width} height={height} />}
 
 
 document.addEventListener("DOMContentLoaded", () => {
