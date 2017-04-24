@@ -1,22 +1,4 @@
 precision mediump float;
-/*
-inputs- per particle:
-time - time offset 
-edgeIndex - 
-* Time offset = b1*2^24+b2
-* if Time Offset <0 return 0
-* Cut off process, example
-* Start Time = 5000, interval 1000
-*  3 particles = -50, -100, -150
-* Increment Time = 5200
-*  3 particles = 5150 % 1000 = 150,5100= 100 5050 = 50
-* Increment Time = 9101, cut off time = 9100+1000
-   3 particles = (-50+9100) % 1000 + (9101-9100) = 51, 9001 = 1, -150+9100 + 1  = 951  
-* Increment Time = 9200, cut off time = 9100 -- this time the 3rd element is more than 1 clockSeconds, so don't show it
-   3 particles = (-50+9100) % 1000 + (9200-9100) = 151, 9001 = 101, (-150+9100) %1000 + 100  = 1050!!!!  
-
-*/
-
 
 //// ****   inputs- variants:
 //* edgeData - array edges x fields (below)
@@ -84,10 +66,7 @@ float toSeconds(vec2 timeSample) {
 float subtract(vec2 time1, vec2 time2) {
     float msf = time1.y-time2.y;
     float lsf = time1.x-time2.x;
-    // if (lsf<0.0) {
-    //     lsf = lsf + 1.0;
-    //     msf = msf - 1.0/65536.0;
-    // }
+    // don't bother doing carry - just work with negatives
     return toSeconds( vec2(lsf,msf));
 }
 
@@ -102,27 +81,29 @@ void main() {
     // time x(seconds) + y(fractions)
     float startTime = toSeconds(startEndTime.xy);
     float endTime=  toSeconds(startEndTime.zw);
+    vec2 clockVec = vec2( clockLsf,clockMsf);
+    vec2 startTimeVec = startEndTime.xy;
+    vec2 endTimeVec = startEndTime.zw;
 
     // if no end time then time is  (clock-startTime+timeOffset) % 1 second
-    float seconds = subtract(vec2( clockLsf,clockMsf), startEndTime.xy)+time;
+    float seconds = subtract(clockVec, startTimeVec)+time;
     float timefrac  = 0.0;
     float timePos = mod(seconds,1.0);
+    // if no end specified, check that 
     if (endTime==0.0) { 
         if (seconds<0.0) {
             gl_PointSize = 0.0;
             gl_Position = vec4(0.0,0.0,0.0,1.0);
             return;
         }
-        timefrac = mod(seconds,1.0);
     } else {
         // otherwise time is (timeoffset+endTime % 1 second)+(clock-end)
-        float endDelta = subtract(startEndTime.zw,vec2(clockLsf,clockMsf));
+        float endDelta = subtract(endTimeVec,clockVec);
         if ((endDelta+timePos)<0.0) {
             gl_PointSize = 0.0;
             gl_Position = vec4(0.0,0.0,0.0,1.0);
             return;
         }
-        // timefrac = mod(seconds,1.0);
     }
     timefrac = timePos;
     

@@ -85,7 +85,6 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
 
     private setupNewCanvas = (canvas: HTMLCanvasElement) => {
         if (this.canvas === canvas || !canvas) return;
-        console.log("New Canvas");
         if (this.canvas !== canvas) {
             this.canvas = canvas;
             this.canvas.addEventListener("webglcontextlost", this.lostContext, false);
