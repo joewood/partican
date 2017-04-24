@@ -42,6 +42,7 @@ export default class Particles {
     private count: number;
     private textureData: TextureData;
     private backgroundColor: { r: number, g: number, b: number };
+    private  texture : WebGLTexture= null;
 
     private props: IProps = null;
     /**
@@ -74,7 +75,7 @@ export default class Particles {
         gl.disable(gl.DEPTH_TEST);
         this.worldsize = new Float32Array([w, h]);
         this.textureData = new TextureData(edgeRows, 1);
-        this.backgroundColor = { r: Color(this.backgroundColor).red(), g: Color(this.backgroundColor).green(), b: Color(this.backgroundColor).blue() };
+        this.backgroundColor = { r: Color(this.props.backgroundColor).red(), g: Color(this.props.backgroundColor).green(), b: Color(this.props.backgroundColor).blue() };
         /* Drawing parameters. */
         console.log("Initialized Particle system")
     }
@@ -113,7 +114,13 @@ export default class Particles {
 
             let edgeIndex = 0;
 
-            const edgeArrayWithPrevious: { from: Date, ratePerSecond: number, props: IParticleEdge, end: Date, particles:number[] }[] = [];
+            const edgeArrayWithPrevious: {
+                from: Date,
+                ratePerSecond: number,
+                props: IParticleEdge,
+                end: Date,
+                particles: number[]
+            }[] = [];
 
             for (let edge of edgeWithSchedule) {
                 if (edge.ratePerSecond > 0) {
@@ -123,7 +130,7 @@ export default class Particles {
                         i++;
                     }
                     edgeArrayWithPrevious.push({
-                        from: new Date(edge.appliesFrom.valueOf()+1000),
+                        from: new Date(edge.appliesFrom.valueOf() + 1000),
                         end: null,
                         props: edge.props,
                         particles: edge.particles,
@@ -147,7 +154,6 @@ export default class Particles {
                     edgeIndex++;
                 }
             }
-            // consolekc.log("Edge Schedule", edgeArrayWithPrevious)
             this.program.use();
             // update time
             const timeBuffer = this.igloo.array(timeOffsetArray, gl.STATIC_DRAW);
@@ -159,8 +165,8 @@ export default class Particles {
             this.program.attrib('edgeIndex', edgeIndexBuffer, 1);
             const edgeCount = edgeArrayWithPrevious.length;
             if (this.textureData.length != edgeCount) {
+                if (this.texture) gl.deleteTexture(this.texture);
                 this.textureData = new TextureData(edgeRows, edgeCount);
-                // console.log(`Allocated Texture ${this.textureData.lengthPower2} x ${this.textureData.rowsPower2}`)
             }
             edgeIndex = 0;
             // update the texture Data, each row is a different attribute of the edge
@@ -186,8 +192,6 @@ export default class Particles {
                 const start = pd.from ? getTime65536(pd.from) : { x: 0, y: 0 };//new Date(new Date().valueOf() - 2000));
                 const end = pd.end ? getTime65536(pd.end) : { x: 0, y: 0 };// || new Date(new Date().valueOf() + 2000));
                 this.textureData.setValue(START_END_TIME_ROW, edgeIndex, start.x / 65536, start.y / 65536, end.x / 65536, end.y / 65536)
-                // console.log("Start",(start.x+start.y*65536)/1000);
-                // console.log("Start--s",(new Date().valueOf())/1000);s
                 edgeIndex++;
             }
             this.program.use();
@@ -201,9 +205,10 @@ export default class Particles {
             this.program.uniform('bezierRow', (BEZIER_ROW + 0.5) / this.textureData.rowsPower2);
             this.program.uniform('startEndTimeRow', (START_END_TIME_ROW + 0.5) / this.textureData.rowsPower2);
 
-            this.textureData.bindTexture(this.igloo.gl, gl.TEXTURE0);
+            this.texture = this.textureData.bindTexture(this.igloo.gl, gl.TEXTURE0);
 
             this.program.uniform('edgeData', 0, true);
+            this.draw();
         }
         catch (e) {
             console.error("UpdateBuffers", e);
@@ -219,7 +224,7 @@ export default class Particles {
         igloo.defaultFramebuffer.bind();
         gl.viewport(0, 0, this.worldsize[0], this.worldsize[1]);
 
-        gl.clearColor(this.backgroundColor.r / 256, this.backgroundColor.g / 256, this.backgroundColor.b / 256, 1);
+        gl.clearColor(this.backgroundColor.r / 256, this.backgroundColor.g / 256, this.backgroundColor.b / 256, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
         this.program.use();
         const time65536 = getTime65536(new Date());

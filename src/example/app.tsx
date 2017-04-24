@@ -3,10 +3,7 @@ import * as ReactDOM from 'react-dom'
 import Swirl from "./swirl"
 // import Paint from "../test/paint"
 
-enum Screen { SWIRL, SIMPLE, PARTITION, NETWORK };
-
 interface IState {
-    screen: Screen;
     width?: number;
     height?: number;
     animate?: boolean;
@@ -21,7 +18,6 @@ class App extends React.Component<any, IState> {
     constructor(p: any) {
         super(p);
         this.state = {
-            screen: Screen.NETWORK,
             height: 0,
             width: 0,
             animate: true,
@@ -31,13 +27,19 @@ class App extends React.Component<any, IState> {
 
     private onResize = () => {
         console.log("resize");
-        this.setState({ width: document.getElementById("root").clientWidth, height: document.getElementById("root").clientHeight });
+        this.setState({
+            width: document.getElementById("root").clientWidth,
+            height: document.getElementById("root").clientHeight
+        });
     }
 
     public componentDidMount() {
         this.timer = window.setInterval(this.moveNext, 1000)
         window.addEventListener("resize", this.onResize);
-        this.setState({ width: document.getElementById("root").clientWidth, height: document.getElementById("root").clientHeight - 20 });
+        this.setState({
+            width: document.getElementById("root").clientWidth,
+            height: document.getElementById("root").clientHeight
+        });
     }
 
     public componentWillUnmount() {
@@ -54,11 +56,16 @@ class App extends React.Component<any, IState> {
     public render() {
         const { width, height } = this.state;
         const { animate, animationIndex } = this.state;
-        console.log("resize", this.state);
-        return (<div key="root" id="root"
-            style={{ backgroundColor: "black", overflow: "hidden" }}
+        return (<div key="root" 
+            style={{ backgroundColor: "orange", overflow: "hidden" }}
             ref={div => this.div = div}>
-            {width && <Swirl animate={animate} animationIndex={animationIndex} height={height - 60} width={width} />}
+            {
+                width && <Swirl key='swirl'
+                    animate={animate}
+                    animationIndex={animationIndex}
+                    height={height}
+                    width={width} />
+            }
         </div>
         )
     }

@@ -30,7 +30,6 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
 
     private setupParticles = (props: IProps) => {
         if (!this.canvas) return;
-        console.log("Setting up particles")
         //set-up canvas
         // this.particles.stop();
         const flowsAny = keyBy(React.Children.toArray(props.children) as { key: string, props: IParticleEdge }[], c => c.key);
@@ -50,6 +49,7 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
     public componentWillReceiveProps(newProps: IProps) {
         if (!!this.particles) {
             if (this.props.children !== newProps.children || this.props.style.width != newProps.style.width || this.props.style.height != newProps.style.height) {
+                // console.log("New Props for canvas ", this.props)
                 this.setupParticles(newProps);
             }
             if (newProps.run !== this.props.run) {
@@ -84,7 +84,7 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
     }
 
     private setupNewCanvas = (canvas: HTMLCanvasElement) => {
-        // if (this.canvas === canvas || !canvas) return;
+        if (this.canvas === canvas || !canvas) return;
         console.log("New Canvas");
         if (this.canvas !== canvas) {
             this.canvas = canvas;
@@ -105,8 +105,8 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
     public render() {
         const { width, height } = this.props.style;
         return (
-            <canvas key="canva"
-                style={{ pointerEvents: "none" }}
+            <canvas key="webgl-canvas"
+                style={{ pointerEvents: "none", backgroundColor:"#200020" }}
                 ref={this.setupNewCanvas}
                 width={width}
                 height={height}>

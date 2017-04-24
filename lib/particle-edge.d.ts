@@ -35,5 +35,5 @@ export declare class ParticleScheduleState {
     private props;
     constructor(props: IParticleEdge);
     getParticles(): IParticleSchedule;
-    updateProps(newProps: IParticleEdge, force?: boolean): void;
+    updateProps(newProps: IParticleEdge): void;
 }

@@ -17,6 +17,7 @@ export default class Particles {
     private count;
     private textureData;
     private backgroundColor;
+    private texture;
     private props;
     /**
      * @param nparticles initial particle count

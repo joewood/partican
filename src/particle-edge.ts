@@ -53,7 +53,7 @@ export class ParticleScheduleState {
     private props: IParticleEdge;
 
     constructor(props: IParticleEdge) {
-        this.props = Object.assign({},props);
+        this.props = Object.assign({}, props);
         this.randomSample = [];
         for (let n = 10000; n >= 0; n--) { this.randomSample[n] = Math.random(); }
         // this.randomSample = this.randomSample.sort((a, b) => a - b);
@@ -62,7 +62,7 @@ export class ParticleScheduleState {
 
     public getParticles(): IParticleSchedule {
         return {
-            appliesFrom: (this.previous && this.previous.end) || new Date( new Date().valueOf()-0),
+            appliesFrom: (this.previous && this.previous.end) || new Date(new Date().valueOf() - 0),
             particles: this.randomSample,
             ratePerSecond: this.props.ratePerSecond,
             props: this.props,
@@ -75,16 +75,16 @@ export class ParticleScheduleState {
         }
     }
 
-    public updateProps(newProps: IParticleEdge, force = false) {
+    public updateProps(newProps: IParticleEdge) {
         const now = new Date();
-        if (force || newProps.ratePerSecond != this.props.ratePerSecond) {
+        if (newProps.ratePerSecond != this.props.ratePerSecond) {
             this.previous = {
                 ratePerSecond: this.props.ratePerSecond,
-                start: (this.previous && this.previous.end) || new Date( now.valueOf()-1000),
+                start: (this.previous && this.previous.end) || new Date(now.valueOf() - 1000),
                 end: now
             };
-            this.props = Object.assign({},this.props,  newProps);
         }
+        this.props = { ...this.props, ...newProps };
     }
 
 }
