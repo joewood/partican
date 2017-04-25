@@ -7,11 +7,17 @@ export interface ISize {
     height: number;
 }
 export interface IParticleStyle {
+    /** Color of the particle, using any valid color string */
     color?: string;
+    /** Roundness factor from 0.0 to 1.0. 0.0 being square, 1.1 being a circle. */
     roundness?: number;
+    /** Size in logical pixels */
     size?: number;
+    /** Fractional variation below the path */
     variationMin?: number;
+    /** Fractional variation above the path */
     variationMax?: number;
+    /** If specified then the color at the end of the route, `color` becomes the starting color. */
     endingColor?: string;
 }
 export interface IPositionlessEdge {

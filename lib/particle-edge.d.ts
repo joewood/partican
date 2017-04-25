@@ -29,11 +29,15 @@ export default class ParticleEdge extends React.Component<IParticleEdge, any> {
     constructor(props: IParticleEdge);
     render(): any;
 }
+/** Holds the historic state of ParticleEdge property changes. Offers a schedule of properties changes
+ * for animations to gradually be applied.
+ */
 export declare class ParticleScheduleState {
-    private previous;
+    private last;
     private randomSample;
-    private props;
+    private edge;
     constructor(props: IParticleEdge);
     getParticles(): IParticleSchedule;
+    /** Property change has occurred */
     updateProps(newProps: IParticleEdge): void;
 }

@@ -49,7 +49,6 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
     public componentWillReceiveProps(newProps: IProps) {
         if (!!this.particles) {
             if (this.props.children !== newProps.children || this.props.style.width != newProps.style.width || this.props.style.height != newProps.style.height) {
-                // console.log("New Props for canvas ", this.props)
                 this.setupParticles(newProps);
             }
             if (newProps.run !== this.props.run) {
@@ -78,9 +77,10 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
 
     private lostContext = (event) => {
         event.preventDefault();
-        console.log("CONTEXT LOST IN CODE");
-        this.particles.stop();
+        const particles = this.particles;
         this.particles = null;
+        particles.stop();
+        console.log("CONTEXT LOST IN CODE");
     }
 
     private setupNewCanvas = (canvas: HTMLCanvasElement) => {

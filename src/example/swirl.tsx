@@ -24,7 +24,7 @@ export default class Swirl extends React.Component<IProps, IState> {
 
     render() {
         const { /*animate, */animationIndex, width, height } = this.props;
-        console.log(`height: ${height} width: ${width} ${animationIndex}`)
+        // console.log(`height: ${height} width: ${width} ${animationIndex}`)
         return <div key="root"
             style={{ display: "flex", flexDirection: "column", alignItems: "stretch", backgroundColor: "blue", height: height, width: width, overflow: "hidden" }}>
             <Motion key="roote"
@@ -59,7 +59,7 @@ export default class Swirl extends React.Component<IProps, IState> {
                                     variationMin: -0.4,
                                     variationMax: 0.4,
                                 }}
-                                ratePerSecond={(animationIndex % 3) * 200 + 100}
+                                ratePerSecond={(animationIndex % 7) * 200 }
                             />
                             <ParticleEdge key="node2"
                                 p0={{ x: style.pos2, y: 0.50 }}
@@ -74,7 +74,7 @@ export default class Swirl extends React.Component<IProps, IState> {
                                     variationMin: -0.4,
                                     variationMax: 0.4,
                                 }}
-                                ratePerSecond={(animationIndex % 2) * 300 + 100}
+                                ratePerSecond={(animationIndex % 8) * 300 }
                             />
 
                         </ParticleCanvas>
