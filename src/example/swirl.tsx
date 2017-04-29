@@ -13,6 +13,15 @@ export interface IProps {
     animate: boolean;
 }
 
+function getCirclePoint(i: number, length: number, radius: number): { x: number, y: number } {
+    const angle = (i % length) / length * 2 * Math.PI;
+    const ret = {
+        x: 0.5 + radius * Math.cos(angle),
+        y: 0.5 + radius * Math.sin(angle)
+    };
+    return ret;
+}
+
 
 export default class Swirl extends React.Component<IProps, IState> {
 
@@ -29,55 +38,66 @@ export default class Swirl extends React.Component<IProps, IState> {
             style={{ display: "flex", flexDirection: "column", alignItems: "stretch", backgroundColor: "blue", height: height, width: width, overflow: "hidden" }}>
             <Motion key="roote"
                 defaultStyle={{
-                    pos1: 0.9,
-                    pos2: 0.1,
-                    vpos:0.5
+                    pos1x: 0.9,
+                    pos1y: 0.9,
+                    pos2x: 0.1,
+                    pos2y: 0.5,
+                    pos3x: 0.1,
+                    pos3y: 0.5,
+                    pos4x: 0.1,
+                    pos4y: 0.5
                 }}
                 style={{
-                    pos1: spring(0.9 - (animationIndex % 5) / 20, { stiffness: 100, damping: 5 }),
-                    pos2: spring(0.15 + (animationIndex % 8) / 30, { damping: 5, stiffness: 100 }),
-                    vpos: spring( (animationIndex % 10) / 20, { damping: 5, stiffness: 100 })
+                    pos1x: spring(getCirclePoint(animationIndex, 40, 0.4).x, { stiffness: 100, damping: 5 }),
+                    pos1y: spring(getCirclePoint(animationIndex, 40, 0.4).y, { stiffness: 100, damping: 5 }),
+                    pos2x: spring(getCirclePoint(animationIndex, 10, 0.2).x, { stiffness: 100, damping: 5 }),
+                    pos2y: spring(getCirclePoint(animationIndex, 10, 0.2).y, { stiffness: 100, damping: 5 }),
+                    pos3x: spring(getCirclePoint(animationIndex+5, 10, 0.2).x, { stiffness: 100, damping: 5 }),
+                    pos3y: spring(getCirclePoint(animationIndex+5, 10, 0.2).y, { stiffness: 100, damping: 5 }),
+                    pos4x: spring(getCirclePoint(animationIndex+20, 40, 0.4).x, { stiffness: 100, damping: 5 }),
+                    pos4y: spring(getCirclePoint(animationIndex+20, 40, 0.4).y, { stiffness: 100, damping: 5 }),
                 }}>{
-                    (style) =>
-                        <ParticleCanvas key="demo-particles"
+                    (style) => {
+                        return <ParticleCanvas key="demo-particles"
                             style={{
                                 height: height,
                                 width: width,
-                                backgroundColor: "red",
+                                backgroundColor: "#302010",
                             }}
                             run={true}>
                             <ParticleEdge key="node1"
-                                p0={{ x: style.pos2, y: 0.50 }}
-                                p1={{ x: 0.5, y: 0.5-style.vpos }}
-                                p2={{ x: 0.200, y: 0.5-style.vpos }}
-                                p3={{ x: style.pos1, y: 0.5 }}
+                                p2={{ x: style.pos1x , y: style.pos1y }}
+                                p1={{ x: style.pos2x, y: style.pos2y }}
+                                p0={{ x: 0.5, y: 0.2 }}
+                                p3={{ x: 0.5, y: 0.5 }}
                                 particleStyle={{
                                     color: `rgb(${(animationIndex * 10 % 200) + 50},${200 - (animationIndex * 20 % 200) + 40},190 )`,
-                                    endingColor: `rgb(${200-(animationIndex * 10 % 200) + 50},${ (animationIndex * 20 % 200) + 40},190 )`,
+                                    endingColor: `rgb(${200 - (animationIndex * 10 % 200) + 50},${(animationIndex * 20 % 200) + 40},190 )`,
                                     roundness: 0.6,
                                     size: 12,
                                     variationMin: -0.4,
                                     variationMax: 0.4,
                                 }}
-                                ratePerSecond={(animationIndex % 7) * 200 }
+                                ratePerSecond={(animationIndex % 7) * 20+4}
                             />
                             <ParticleEdge key="node2"
-                                p0={{ x: style.pos2, y: 0.50 }}
-                                p1={{ x: 0.5, y: 0.5+style.vpos }}
-                                p2={{ x: 0.2, y: 0.5+style.vpos }}
-                                p3={{ x: style.pos1, y: 0.5 }}
+                                p0={{ x: style.pos4x, y: style.pos4y }}
+                                p1={{ x: style.pos3x, y: style.pos3y }}
+                                p2={{ x: 0.5, y: 0.7 }}
+                                p3={{ x: 0.5, y: 0.5 }}
                                 particleStyle={{
                                     endingColor: `rgb(${(animationIndex * 10 % 200) + 50},${200 - (animationIndex * 20 % 200) + 40},190 )`,
-                                    color: `rgb(${200-(animationIndex * 10 % 200) + 50},${ (animationIndex * 20 % 200) + 40},190 )`,
+                                    color: `rgb(${200 - (animationIndex * 10 % 200) + 50},${(animationIndex * 20 % 200) + 40},190 )`,
                                     roundness: 0.6,
                                     size: 12,
                                     variationMin: -0.4,
                                     variationMax: 0.4,
                                 }}
-                                ratePerSecond={(animationIndex % 8) * 300 }
+                                ratePerSecond={(animationIndex % 8) * 50+5}
                             />
 
-                        </ParticleCanvas>
+                        </ParticleCanvas>;
+                    }
                 }
             </Motion>
         </div >;

@@ -102,10 +102,10 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
     }
 
     public render() {
-        const { width, height } = this.props.style;
+        const { width, height, backgroundColor } = this.props.style;
         return (
             <canvas key="webgl-canvas"
-                style={{ pointerEvents: "none", backgroundColor:"#200020" }}
+                style={{ pointerEvents: "none", backgroundColor: backgroundColor || "#200020" }}
                 ref={this.setupNewCanvas}
                 width={width}
                 height={height}>
