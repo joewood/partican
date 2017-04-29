@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /src/example/bundle.js
+/src/example/bundle.js.map
 
 # production
 /build
