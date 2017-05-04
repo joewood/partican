@@ -1,13 +1,20 @@
 import * as React from "react"
 import * as ReactDOM from 'react-dom'
 import Swirl from "./swirl"
+import Editor, { IPoints, INext } from "./form"
 // import Paint from "../test/paint"
+
+const PANEL_WIDTH = 300;
+
 
 interface IState {
     width?: number;
     height?: number;
     animate?: boolean;
-    animationIndex: number;
+    current: INext;
+    next: INext;
+    points: IPoints;
+    nextRate: number;
 }
 
 class App extends React.Component<any, IState> {
@@ -17,11 +24,28 @@ class App extends React.Component<any, IState> {
 
     constructor(p: any) {
         super(p);
+        const state: INext = {
+            startingColor: "#a0f0a0",
+            endingColor: "#9090ff",
+            rate: 100,
+            roundness: 0.3,
+            size:8,
+            minVariation: -0.2,
+            maxVariation: 0.2,
+        };
         this.state = {
             height: 0,
             width: 0,
             animate: true,
-            animationIndex: 0
+            current: state,
+            next: {...state},
+            points: {
+                p0: 0.5,
+                p1: 0.5,
+                p2: 0.5,
+                p3: 0.5
+            },
+            nextRate: 100,
         }
     }
 
@@ -49,23 +73,38 @@ class App extends React.Component<any, IState> {
 
     private moveNext = () => {
         if (!this.state.animate) return;
-        const animationIndex = this.state.animationIndex + 1;
-        this.setState({ animationIndex: animationIndex });
+        this.setState({ current: { ... this.state.next } });
     }
 
     public render() {
         const { width, height } = this.state;
-        const { animate, animationIndex } = this.state;
-        return (<div key="root" 
+        const { animate } = this.state;
+        return (<div key="root"
             style={{ backgroundColor: "orange", overflow: "hidden" }}
             ref={div => this.div = div}>
             {
                 width && <Swirl key='swirl'
                     animate={animate}
-                    animationIndex={animationIndex}
                     height={height}
-                    width={width} />
+                    width={width - PANEL_WIDTH}
+                    startingColor={this.state.current.startingColor}
+                    endingColor={this.state.current.endingColor}
+                    minVariation={this.state.current.minVariation}
+                    maxVariation={this.state.current.maxVariation}
+                    roundness={this.state.current.roundness}
+                    size={this.state.current.size}
+                    rate={this.state.current.rate}
+                    points={this.state.points}
+                />
             }
+            <Editor key="editor"
+                width={PANEL_WIDTH}
+                points={this.state.points}
+                current={this.state.current}
+                next={this.state.next}
+                onPointsChange={points => this.setState({ points: points })}
+                onNextChange={(nextRate => this.setState({ next: nextRate }))}
+            />
         </div>
         )
     }
