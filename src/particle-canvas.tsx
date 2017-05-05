@@ -13,7 +13,8 @@ export interface IProps {
         height: number;
         backgroundColor?: string;
     }
-    defaultParticleStyle?: IParticleStyle;
+    /** The default values for the particle style in each edge  */
+    particleStyle?: IParticleStyle;
     defaultRatePerSecond?: number;
     children?: ParticleEdge[];
     run?: boolean;
@@ -35,7 +36,7 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
 
         const edgeChildren = keyBy(React.Children.toArray(props.children) as { key: string, props: IParticleEdge }[], c => c.key);
         map(edgeChildren, (v, k) => {
-            const style = {...this.props.defaultParticleStyle, ...v.props.particleStyle};
+            const style = {...this.props.particleStyle, ...v.props.particleStyle};
             if (!this.edgeState[k]) {
                 this.edgeState[k] = new ParticleScheduleState({...v.props,particleStyle:style});
             } else {

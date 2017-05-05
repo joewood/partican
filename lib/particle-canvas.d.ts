@@ -8,7 +8,8 @@ export interface IProps {
         height: number;
         backgroundColor?: string;
     };
-    defaultParticleStyle?: IParticleStyle;
+    /** The default values for the particle style in each edge  */
+    particleStyle?: IParticleStyle;
     defaultRatePerSecond?: number;
     children?: ParticleEdge[];
     run?: boolean;
