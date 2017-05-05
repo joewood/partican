@@ -16,8 +16,8 @@ export interface IProps {
     minVariation: number;
     maxVariation: number;
     rate: number;
-    roundness:number;
-    size:number;
+    roundness: number;
+    size: number;
     points: IPoints;
 }
 
@@ -61,7 +61,15 @@ export default class Swirl extends React.PureComponent<IProps, IState> {
                             style={{
                                 height: height,
                                 width: width,
-                                backgroundColor: "#302010",
+                                backgroundColor: "#101820",
+                            }}
+                            defaultParticleStyle={{
+                                color: this.props.startingColor,
+                                endingColor: this.props.endingColor,
+                                roundness: this.props.roundness,
+                                size: this.props.size,
+                                variationMin: this.props.minVariation,
+                                variationMax: this.props.maxVariation,
                             }}
                             run={true}>
                             <ParticleEdge key="node1"
@@ -70,12 +78,12 @@ export default class Swirl extends React.PureComponent<IProps, IState> {
                                 p2={{ x: style.pos3x, y: style.pos3y }}
                                 p3={{ x: style.pos4x, y: style.pos4y }}
                                 particleStyle={{
-                                    color: this.props.startingColor,
-                                    endingColor: this.props.endingColor,
-                                    roundness: this.props.roundness,
-                                    size: this.props.size,
-                                    variationMin: this.props.minVariation,
-                                    variationMax: this.props.maxVariation,
+                                    //color: this.props.startingColor,
+                                    //endingColor: this.props.endingColor,
+                                    //roundness: this.props.roundness,
+                                    //size: this.props.size,
+                                    //variationMin: this.props.minVariation,
+                                    //variationMax: this.props.maxVariation,*/}
                                 }}
                                 ratePerSecond={this.props.rate}
                             />

@@ -13,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joewood/partican.git"
-  },
+  },  
   "keywords": [
     "react",
     "webgl",

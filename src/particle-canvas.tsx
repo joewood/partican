@@ -32,13 +32,16 @@ export class ParticleCanvas extends React.PureComponent<IProps, IState> {
         if (!this.canvas) return;
         //set-up canvas
         // this.particles.stop();
-        const flowsAny = keyBy(React.Children.toArray(props.children) as { key: string, props: IParticleEdge }[], c => c.key);
-        map(flowsAny, (v, k) => {
+
+        const edgeChildren = keyBy(React.Children.toArray(props.children) as { key: string, props: IParticleEdge }[], c => c.key);
+        map(edgeChildren, (v, k) => {
+            const style = {...this.props.defaultParticleStyle, ...v.props.particleStyle};
             if (!this.edgeState[k]) {
-                this.edgeState[k] = new ParticleScheduleState(v.props);
+                this.edgeState[k] = new ParticleScheduleState({...v.props,particleStyle:style});
             } else {
-                this.edgeState[k].updateProps(v.props);
+                this.edgeState[k].updateProps({...v.props,particleStyle:style});
             }
+            // console.log("Style",{...this.props.defaultParticleStyle,...v.props})
         });
         // this.particles.updateProps({ backgroundColor: props.style.backgroundColor, canvas: this.canvas });
         this.particles.updateBuffers(Object.values(this.edgeState), props.style.width, props.style.height);

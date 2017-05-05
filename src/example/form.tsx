@@ -73,29 +73,28 @@ export default function (this: void, { points, width, current, next, ...props }:
     }
 
     return <div style={{ color: "white", width: width - 10, display: "inline-block", verticalAlign: "top", padding: 5, margin: 0, backgroundColor: "#404040" }}>
-        <div >
+        <div key="rate" >
             <p>Rate Per Second:{Math.floor(current.rate)}</p>
             <Slider key="p0" p={next.rate} width={width - 10} max={1000} onChange={onNextChange.bind(this, "rate")} name="rate" />
         </div>
 
-        <div >
+        <div key="max">
             <p>Variation: {current.minVariation} to {current.maxVariation}</p>
             <Slider key="min" p={next.minVariation} width={width - 10} min={-0.8} max={0.0} onChange={onNextChange.bind(this, "minVariation")} name="min" />
             <Slider key="max" p={next.maxVariation} width={width - 10} min={0.0} max={0.8} onChange={onNextChange.bind(this, "maxVariation")} name="max" />
         </div>
 
-        <div >
+        <div key="size" >
             <p>Size: {current.size}</p>
             <Slider key="max" p={next.size} width={width - 10} min={0.0} max={20} onChange={onNextChange.bind(this, "size")} name="size" />
         </div>
 
-        <div >
+        <div key="roundness">
             <p>Roundness: {current.roundness}</p>
             <Slider key="rnd" p={next.roundness} width={width - 10} min={0.0} max={1.0} onChange={onNextChange.bind(this, "roundness")} name="round" />
         </div>
 
-
-        <div style={{ width: width - 10, display: "block", padding: 0 }}>
+        <div key='points' style={{ width: width - 10, display: "block", padding: 0 }}>
             <p>Bezier Points</p>
             <Slider key="p0" p={points.p0} width={width} onChange={onChange.bind(null, "p0")} name="p0" />
             <Slider key="p1" p={points.p1} width={width} onChange={onChange.bind(null, "p1")} min={-1.0} max={2.0} name="p1" />
