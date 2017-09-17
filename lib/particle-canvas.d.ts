@@ -1,7 +1,6 @@
 /// <reference types="react" />
 import * as React from "react";
 import { IParticleStyle } from "./model";
-import ParticleEdge from "./particle-edge";
 export interface IProps {
     style: {
         width: number;
@@ -11,7 +10,7 @@ export interface IProps {
     /** The default values for the particle style in each edge  */
     particleStyle?: IParticleStyle;
     defaultRatePerSecond?: number;
-    children?: ParticleEdge[];
+    children?: any;
     run?: boolean;
 }
 export interface IState {

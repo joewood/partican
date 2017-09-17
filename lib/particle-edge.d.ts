@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import * as React from "react";
-import { IParticleEdge } from './particles';
+import { IParticleEdge } from "./particles";
 /**
  * Design:
  * Canvas has multiple edges

@@ -1,3 +1,4 @@
+/** Simple abstraction over a WebGL Texture */
 export default class TextureData {
     private rows;
     length: number;

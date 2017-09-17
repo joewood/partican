@@ -3,7 +3,7 @@ import { keyBy, map, Dictionary } from "lodash";
 import Particles,{ IParticleEdge } from "./particles";
 import { IParticleStyle } from "./model";
 
-import ParticleEdge, { ParticleScheduleState } from "./particle-edge";
+import { ParticleScheduleState } from "./particle-edge";
 
 export interface IProps {
 	style: {
@@ -14,7 +14,7 @@ export interface IProps {
 	/** The default values for the particle style in each edge  */
 	particleStyle?: IParticleStyle;
 	defaultRatePerSecond?: number;
-	children?: ParticleEdge[];
+	children?: any;
 	run?: boolean;
 }
 
