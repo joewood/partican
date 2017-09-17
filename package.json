@@ -1,7 +1,7 @@
 {
   "name": "partican",
-  "version": "0.1.5",
-  "description": "React Component for a Particle System Canvasa",
+  "version": "0.1.6",
+  "description": "React Component for a Particle System Canvas",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "directories": {
