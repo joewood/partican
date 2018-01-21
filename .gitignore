@@ -1,12 +1,10 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
 
+node_modules
 # dependencies
-/node_modules
 /src/example/bundle.js
 /src/example/bundle.js.map
 
 # production
-/build
 /lib/example/*.map
 
 # misc
