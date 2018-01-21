@@ -1,25 +1,12 @@
 {
-  "name": "partican",
-  "version": "0.1.7",
+  "name": "partican-test",
+  "version": "0.1.8",
   "description": "React Component for a Particle System Canvas",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "directories": {
-    "example": "example"
-  },
-  "scripts": {
-    "test": "webpack-dev-server --config webpack.config.js"
-  },
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joewood/partican.git"
   },
-  "keywords": [
-    "react",
-    "webgl",
-    "particle",
-    "gpu"
-  ],
   "author": "Joe Wood",
   "license": "MIT",
   "bugs": {
@@ -44,8 +31,8 @@
     "react-dom": "^16.2"
   },
   "dependencies": {
-    "react-motion": "^0.5",
-    "partican": "^0.1",
-    "raw-loader": "^0.5"
+    "partican": "^0.1.7",
+    "raw-loader": "^0.5",
+    "react-motion": "^0.5"
   }
 }

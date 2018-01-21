@@ -2,7 +2,6 @@ import * as React from "react"
 import * as ReactDOM from 'react-dom'
 import Swirl from "./swirl"
 import Editor, { IPoints, INext } from "./form"
-// import Paint from "../test/paint"
 
 const PANEL_WIDTH = 300;
 
@@ -80,7 +79,7 @@ class App extends React.Component<any, IState> {
         const { width, height } = this.state;
         const { animate } = this.state;
         return (<div key="root"
-            style={{ backgroundColor: "orange", overflow: "hidden" }}
+            style={{ backgroundColor: "black", overflow: "hidden" }}
             ref={div => this.div = div}>
             {
                 width && <Swirl key='swirl'
@@ -109,8 +108,6 @@ class App extends React.Component<any, IState> {
         )
     }
 }
-
-// {width && <Paint width={width} height={height} />}
 
 
 document.addEventListener("DOMContentLoaded", () => {
