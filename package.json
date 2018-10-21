@@ -40,10 +40,10 @@
     "react-dom": "^16.2"
   },
   "dependencies": {
-    "color": "^2.0",
-    "equals": "^1.1.0",
+    "color": "^3.1.0",
+    "equals": "^1.0.5",
     "igloo-ts": "^1.0",
-    "lodash": "^4.17",
+    "lodash": "^4.17.11",
     "raw-loader": "^0.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
