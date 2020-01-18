@@ -34,8 +34,8 @@ function getTime65536(date?: Date): { x: number, y: number } {
 }
 
 export default class Particles {
-    private igloo: Igloo;
-    private program: Program;
+    // private igloo: Igloo;
+    // private program: Program;
     private raf: number = 0;
     private worldsize: Float32Array;
 

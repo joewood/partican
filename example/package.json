@@ -12,27 +12,30 @@
   "bugs": {
     "url": "https://github.com/joewood/partican/issues"
   },
+  "scripts": {
+    "dev": "web"
+  },
   "homepage": "https://github.com/joewood/partican#readme",
   "devDependencies": {
     "@types/color": "^3.0.0",
-    "@types/lodash": "^4.14.117",
-    "@types/react": "^16.4.18",
-    "@types/react-dom": "^16.0.9",
-    "@types/react-motion": "0.0.27",
-    "@types/webpack": "^4.4.17",
-    "file-loader": "^2.0.0",
+    "@types/lodash": "^4.14.149",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "@types/react-motion": "0.0.29",
+    "@types/webpack": "^4.41.0",
+    "file-loader": "^5.0.2",
     "html-loader": "^0.5",
     "html-webpack-plugin": "^3.2.0",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "ts-loader": "^5.2.2",
-    "typescript": "^3.1.3",
-    "webpack": "^4.22.0",
-    "webpack-dev-server": "^3.1.9"
+    "raw-loader": "^4.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
-    "partican": "^0.1.7",
-    "raw-loader": "^0.5",
     "react-motion": "^0.5"
   }
 }

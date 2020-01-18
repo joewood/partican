@@ -25,7 +25,7 @@ export default class Particles {
      */
     constructor(props: IProps);
     updateProps(props: IProps): void;
-    readonly isRunning: boolean;
+    get isRunning(): boolean | undefined;
     /** If the vertices have changed then update the buffers   */
     updateBuffers(edges: ParticleScheduleState[], width: number, height: number): void;
     /** Draw the current simulation state to the display. */

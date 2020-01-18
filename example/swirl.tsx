@@ -1,6 +1,6 @@
 import * as React from "react"
 // import { range } from "lodash";
-import { ParticleEdge, ParticleCanvas } from "partican"
+import { ParticleEdge, ParticleCanvas } from ".."
 import { Motion, spring } from "react-motion"
 import { IPoints } from "./form"
 

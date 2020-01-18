@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sourceRoot":"C:/code/partican/src/","sources":["index.ts"],"names":[],"mappings":";;AAAA,qDAAmD;AAA1C,2CAAA,cAAc,CAAA;AACvB,iDAA2C;AACnC,uBADD,uBAAY,CACC"}
+{"version":3,"file":"index.js","sourceRoot":"src/","sources":["index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,mBAAmB,CAAC;AACnD,OAAO,YAAY,MAAM,iBAAiB,CAAC;AAC3C,OAAO,EAAE,YAAY,EAAE,CAAC"}

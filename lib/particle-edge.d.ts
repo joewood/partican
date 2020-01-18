@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from "react";
 import { IParticleEdge } from "./particles";
 /**
@@ -7,10 +6,10 @@ import { IParticleEdge } from "./particles";
  * Particle Positions start negative - not shown
  * Particles at regular intervals
  * Reduction in rate- reduce the particles
-    * At time  (p+i mod t)/t mark as invisible
-    * Add a new edge with expiring particles
+ * At time  (p+i mod t)/t mark as invisible
+ * Add a new edge with expiring particles
  * increate in rate
-    *
+ *
  *
  */
 export interface IParticleSchedule {
@@ -27,7 +26,7 @@ export interface IParticleSchedule {
 }
 export default class ParticleEdge extends React.Component<IParticleEdge, any> {
     constructor(props: IParticleEdge);
-    render(): any;
+    render(): null;
 }
 /** Holds the historic state of ParticleEdge property changes. Offers a schedule of properties changes
  * for animations to gradually be applied.
