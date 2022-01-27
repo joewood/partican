@@ -46,6 +46,6 @@
     "igloo-ts": "^1.0",
     "lodash-es": "^4.17.15",
     "react-three-fiber": "^3.0.17",
-    "three": "^0.112.1"
+    "three": "^0.137.0"
   }
 }
